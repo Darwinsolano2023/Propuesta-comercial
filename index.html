@@ -11,6 +11,10 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            scroll-behavior: smooth;
+            scroll-padding-top: 0;
+            margin: 0;
+            padding: 0;
         }
 
         body {
@@ -37,24 +41,6 @@
             animation: slideIn 0.5s ease-out;
             page-break-after: always;
             overflow-y: auto;
-        }
-
-        @media print {
-            .slide {
-                display: flex !important;
-                position: relative;
-                page-break-after: always;
-                animation: none;
-            }
-            .navigation, .slide-counter, .download-btn {
-                display: none !important;
-            }
-        }
-
-        .slide.active {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
         }
 
         @keyframes slideIn {
@@ -419,6 +405,19 @@
             .timeline-item:hover {
                 transform: translateX(10px);
                 background: rgba(30, 58, 95, 0.7);
+            }
+
+            .alcance-icon,
+            .icono {
+                display: none !important;
+            }
+            body {
+                padding-top: 0 !important;
+                margin-top: 0 !important;
+            }
+            section {
+                min-height: auto !important;
+                height: auto !important;
             }
         }
 
