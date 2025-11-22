@@ -17,6 +17,10 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: #1a1a2e;
             overflow-x: hidden;
+            scroll-behavior: smooth;
+            scroll-padding-top: 0;
+            margin: 0;
+            padding: 0;
         }
 
         .presentation-container {
@@ -49,6 +53,12 @@
             .navigation, .slide-counter, .download-btn {
                 display: none !important;
             }
+        }
+
+        .slide.active {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
 
         @keyframes slideIn {
@@ -179,6 +189,18 @@
             .feature-item {
                 flex-direction: row;
                 align-items: center;
+            }
+            body {
+                padding-top: 0 !important;
+                margin-top: 0 !important;
+            }
+            section {
+                min-height: auto !important;
+                height: auto !important;
+            }
+            .alcance-icon,
+            .icono {
+                display: none !important;
             }
         }
 
@@ -413,19 +435,6 @@
             .timeline-item:hover {
                 transform: translateX(10px);
                 background: rgba(30, 58, 95, 0.7);
-            }
-
-            .alcance-icon,
-            .icono {
-                display: none !important;
-            }
-            body {
-                padding-top: 0 !important;
-                margin-top: 0 !important;
-            }
-            section {
-                min-height: auto !important;
-                height: auto !important;
             }
         }
 
@@ -755,7 +764,7 @@
                     <div class="details">
                         • Plantillas predefinidas<br>
                         • Funcionalidades estándar<br>
-                        • Personalización limitada
+                        • Sin personalización
                     </div>
                 </div>
 
@@ -764,8 +773,8 @@
                     <div class="price-range">$3M - $15M</div>
                     <div class="details">
                         • Diseño semi-personalizado<br>
-                        • Funciones adicionales<br>
-                        • Integraciones básicas
+                        • Catálogo amplio<br>
+                        • Funciones adicionales
                     </div>
                 </div>
 
@@ -774,8 +783,8 @@
                     <div class="price-range">$15M - $30M+</div>
                     <div class="details">
                         • Diseño 100% a medida<br>
-                        • Funciones complejas<br>
-                        • Múltiples integraciones
+                        • Múltiples integraciones<br>
+                        • Escalabilidad enterprise
                     </div>
                 </div>
             </div>
@@ -814,8 +823,6 @@
             <div class="value-proposition">
                 <h3>✨ Nuestra Propuesta de Valor</h3>
                 <p>
-                    Ofrecemos una solución <strong>profesional y personalizada</strong> a precios competitivos, 
-                    con opciones flexibles de pago que se ajustan a su presupuesto. <br>
                     Nuestro modelo SaaS a <strong>$75.000/mes</strong> es <strong>hasta 30% más económico</strong> 
                     que plataformas internacionales, sin sacrificar calidad ni funcionalidad.<br>
                     Otras plataformas de servicios SaaS tienen sus diseños establecidos y el cliente es quien se ajusta a estos.
