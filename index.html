@@ -39,6 +39,18 @@
             overflow-y: auto;
         }
 
+        @media print {
+            .slide {
+                display: flex !important;
+                position: relative;
+                page-break-after: always;
+                animation: none;
+            }
+            .navigation, .slide-counter, .download-btn {
+                display: none !important;
+            }
+        }
+
         @keyframes slideIn {
             from {
                 opacity: 0;
