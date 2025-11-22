@@ -1,0 +1,1060 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Propuesta Comercial Ecommerce</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #1a1a2e;
+            overflow-x: hidden;
+        }
+
+        .presentation-container {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+        }
+
+        .slide {
+            width: 100%;
+            height: 100%;
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            padding: clamp(20px, 5vw, 60px);
+            background: linear-gradient(135deg, #1e3a5f 0%, #2d3748 100%);
+            animation: slideIn 0.5s ease-out;
+            page-break-after: always;
+            overflow-y: auto;
+        }
+
+        @media print {
+            .slide {
+                display: flex !important;
+                position: relative;
+                page-break-after: always;
+                animation: none;
+            }
+            .navigation, .slide-counter, .download-btn {
+                display: none !important;
+            }
+        }
+
+        .slide.active {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* Slide 1 - Portada */
+        .slide-1 {
+            align-items: center;
+            text-align: center;
+            background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
+        }
+
+        .slide-1 h1 {
+            font-size: clamp(1.8em, 6vw, 4em);
+            color: white;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+        }
+
+        .slide-1 h2 {
+            font-size: clamp(1.2em, 3vw, 2em);
+            color: #f0f0f0;
+            margin-bottom: clamp(20px, 4vw, 40px);
+        }
+
+        .slide-1 .client-name {
+            font-size: clamp(1.3em, 3.5vw, 1.8em);
+            color: #60a5fa;
+            margin-bottom: clamp(30px, 6vw, 60px);
+        }
+
+        .slide-1 .company-info {
+            margin-top: clamp(20px, 4vw, 40px);
+            color: white;
+            font-size: clamp(1em, 2vw, 1.2em);
+        }
+
+        /* Slide 2 - Objetivos */
+        .slide-2 {
+            background: linear-gradient(135deg, #1a1f3a 0%, #2d3561 100%);
+        }
+
+        .slide-title {
+            font-size: clamp(1.8em, 5vw, 3em);
+            color: white;
+            margin-bottom: clamp(20px, 4vw, 40px);
+            border-bottom: 4px solid white;
+            padding-bottom: clamp(10px, 2vw, 20px);
+        }
+
+        .objectives-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+            gap: clamp(15px, 3vw, 30px);
+            margin-top: clamp(20px, 4vw, 40px);
+        }
+
+        .objective-card {
+            background: rgba(30, 58, 95, 0.6);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: clamp(20px, 3vw, 30px);
+            border: 2px solid rgba(96, 165, 250, 0.3);
+            transition: transform 0.3s;
+        }
+
+        .objective-card h3 {
+            font-size: clamp(1.3em, 3vw, 1.8em);
+            color: white;
+            margin-bottom: 15px;
+        }
+
+        .objective-card p {
+            color: #f0f0f0;
+            font-size: clamp(0.95em, 2vw, 1.1em);
+            line-height: 1.6;
+        }
+
+        /* Slide 3 - Alcance */
+        .slide-3 {
+            background: linear-gradient(135deg, #141e30 0%, #243b55 100%);
+        }
+
+        .features-list {
+            display: flex;
+            flex-direction: column;
+            gap: clamp(15px, 2vw, 20px);
+            margin-top: clamp(20px, 3vw, 30px);
+        }
+
+        .feature-item {
+            background: rgba(30, 58, 95, 0.5);
+            backdrop-filter: blur(10px);
+            padding: clamp(15px, 3vw, 25px);
+            border-radius: 15px;
+            border-left: 5px solid #60a5fa;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 15px;
+        }
+
+        .feature-icon {
+            font-size: clamp(2em, 4vw, 2.5em);
+            min-width: 60px;
+        }
+
+        .feature-content h3 {
+            color: white;
+            font-size: clamp(1.2em, 2.5vw, 1.5em);
+            margin-bottom: 8px;
+        }
+
+        .feature-content p {
+            color: #f0f0f0;
+            font-size: clamp(0.95em, 1.8vw, 1.1em);
+        }
+
+        @media (min-width: 768px) {
+            .feature-item {
+                flex-direction: row;
+                align-items: center;
+            }
+        }
+
+        /* Slide 4 - Estudio de Mercado */
+        .slide-4 {
+            background: linear-gradient(135deg, #1a2332 0%, #2d3e50 100%);
+        }
+
+        .market-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr));
+            gap: clamp(15px, 3vw, 25px);
+            margin: clamp(20px, 3vw, 30px) 0;
+        }
+
+        .stat-card {
+            background: rgba(30, 58, 95, 0.5);
+            backdrop-filter: blur(10px);
+            padding: clamp(20px, 3vw, 30px);
+            border-radius: 20px;
+            border: 2px solid rgba(96, 165, 250, 0.3);
+            text-align: center;
+        }
+
+        .stat-card .big-number {
+            font-size: clamp(2em, 5vw, 3em);
+            color: #60a5fa;
+            font-weight: bold;
+            margin: 15px 0;
+        }
+
+        .stat-card .label {
+            color: white;
+            font-size: clamp(1em, 2.2vw, 1.3em);
+            font-weight: bold;
+        }
+
+        .stat-card .description {
+            color: #cbd5e0;
+            font-size: clamp(0.9em, 1.8vw, 1em);
+            margin-top: 10px;
+        }
+
+        .comparison-table {
+            background: rgba(30, 58, 95, 0.5);
+            backdrop-filter: blur(10px);
+            padding: clamp(20px, 3vw, 30px);
+            border-radius: 20px;
+            margin-top: clamp(20px, 3vw, 30px);
+            border: 2px solid rgba(96, 165, 250, 0.3);
+        }
+
+        .comparison-table h3 {
+            color: #60a5fa;
+            font-size: clamp(1.3em, 3vw, 1.8em);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr));
+            gap: clamp(15px, 2vw, 20px);
+            margin-top: 20px;
+        }
+
+        .comparison-item {
+            background: rgba(20, 40, 60, 0.6);
+            padding: clamp(15px, 2vw, 20px);
+            border-radius: 15px;
+            text-align: center;
+        }
+
+        .comparison-item .price-range {
+            color: #60a5fa;
+            font-size: clamp(1.3em, 3vw, 1.8em);
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        .comparison-item .type {
+            color: white;
+            font-size: clamp(1em, 2vw, 1.2em);
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .comparison-item .details {
+            color: #cbd5e0;
+            font-size: clamp(0.85em, 1.6vw, 0.95em);
+            line-height: 1.6;
+        }
+
+        .value-proposition {
+            background: rgba(96, 165, 250, 0.15);
+            padding: clamp(15px, 3vw, 25px);
+            border-radius: 15px;
+            margin-top: clamp(15px, 3vw, 25px);
+            border: 2px solid #60a5fa;
+            text-align: center;
+        }
+
+        .value-proposition h3 {
+            color: #60a5fa;
+            font-size: clamp(1.2em, 2.8vw, 1.6em);
+            margin-bottom: 15px;
+        }
+
+        .value-proposition p {
+            color: white;
+            font-size: clamp(0.95em, 2vw, 1.2em);
+            line-height: 1.7;
+        }
+
+        /* Slide 5 - Propuestas */
+        .slide-5 {
+            background: linear-gradient(135deg, #232526 0%, #414345 100%);
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+            gap: clamp(20px, 3vw, 30px);
+            margin-top: clamp(20px, 4vw, 40px);
+        }
+
+        .pricing-card {
+            background: linear-gradient(135deg, #1e3a5f 0%, #2d3748 100%);
+            border-radius: 20px;
+            padding: clamp(25px, 4vw, 40px) clamp(20px, 3vw, 30px);
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            transition: transform 0.3s;
+            position: relative;
+            border: 1px solid rgba(96, 165, 250, 0.2);
+        }
+
+        .pricing-card.recommended {
+            border: 4px solid #60a5fa;
+        }
+
+        @media (min-width: 1024px) {
+            .pricing-card.recommended {
+                transform: scale(1.05);
+            }
+        }
+
+        .recommended-badge {
+            position: absolute;
+            top: -15px;
+            right: 20px;
+            background: #60a5fa;
+            color: white;
+            padding: clamp(6px, 1vw, 8px) clamp(15px, 2vw, 20px);
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: clamp(0.8em, 1.5vw, 1em);
+        }
+
+        .pricing-card h3 {
+            font-size: clamp(1.5em, 3vw, 2em);
+            color: white;
+            margin-bottom: 20px;
+        }
+
+        .price {
+            font-size: clamp(2em, 5vw, 3em);
+            color: #60a5fa;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+
+        .price-detail {
+            color: #cbd5e0;
+            font-size: clamp(0.9em, 1.8vw, 1em);
+            margin-bottom: 20px;
+        }
+
+        .features {
+            text-align: left;
+            margin-top: 20px;
+        }
+
+        .features li {
+            color: #e2e8f0;
+            margin-bottom: 12px;
+            padding-left: 25px;
+            position: relative;
+            font-size: clamp(0.9em, 1.8vw, 1em);
+        }
+
+        .features li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #60a5fa;
+            font-weight: bold;
+        }
+
+        /* Slide 6 - Cronograma */
+        .slide-6 {
+            background: linear-gradient(135deg, #1a2a3a 0%, #2d4a5a 100%);
+        }
+
+        .timeline {
+            margin-top: 40px;
+            position: relative;
+        }
+
+        .timeline-item {
+            background: rgba(30, 58, 95, 0.5);
+            backdrop-filter: blur(10px);
+            padding: clamp(15px, 3vw, 25px);
+            border-radius: 15px;
+            margin-bottom: 20px;
+            border-left: 5px solid #60a5fa;
+            transition: transform 0.3s;
+        }
+
+        .timeline-item h3 {
+            color: white;
+            font-size: clamp(1.2em, 2.8vw, 1.8em);
+            margin-bottom: 10px;
+        }
+
+        .timeline-item p {
+            color: #cbd5e0;
+            font-size: clamp(0.95em, 1.8vw, 1.1em);
+        }
+
+        @media (min-width: 768px) {
+            .timeline-item:hover {
+                transform: translateX(10px);
+                background: rgba(30, 58, 95, 0.7);
+            }
+        }
+
+        /* Slide 7 - Contacto */
+        .slide-7 {
+            background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
+            align-items: center;
+            text-align: center;
+        }
+
+        /* Slide 8 - Aceptación */
+        .slide-8 {
+            background: linear-gradient(135deg, #1a1f3a 0%, #2d3561 100%);
+            justify-content: center;
+        }
+
+        .acceptance-container {
+            background: rgba(30, 58, 95, 0.6);
+            backdrop-filter: blur(10px);
+            padding: clamp(25px, 5vw, 50px);
+            border-radius: 30px;
+            border: 2px solid rgba(96, 165, 250, 0.3);
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .payment-terms {
+            background: rgba(96, 165, 250, 0.1);
+            padding: clamp(20px, 3vw, 30px);
+            border-radius: 20px;
+            margin: clamp(20px, 3vw, 30px) 0;
+            border: 2px solid #60a5fa;
+        }
+
+        .payment-terms h3 {
+            color: #60a5fa;
+            font-size: clamp(1.3em, 3vw, 1.8em);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .payment-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 150px), 1fr));
+            gap: clamp(15px, 2vw, 20px);
+            margin: 20px 0;
+        }
+
+        .payment-item {
+            background: rgba(30, 58, 95, 0.5);
+            padding: clamp(15px, 2vw, 20px);
+            border-radius: 15px;
+            text-align: center;
+        }
+
+        .payment-item .percentage {
+            font-size: clamp(2em, 5vw, 3em);
+            color: #60a5fa;
+            font-weight: bold;
+        }
+
+        .payment-item .label {
+            color: white;
+            font-size: clamp(1em, 2.2vw, 1.3em);
+            margin-top: 10px;
+        }
+
+        .payment-item .detail {
+            color: #cbd5e0;
+            font-size: clamp(0.85em, 1.6vw, 1em);
+            margin-top: 5px;
+        }
+
+        .signature-section {
+            margin-top: clamp(30px, 5vw, 50px);
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr));
+            gap: clamp(30px, 5vw, 50px);
+        }
+
+        .signature-box {
+            text-align: center;
+        }
+
+        .signature-line {
+            border-top: 2px solid #60a5fa;
+            margin: clamp(40px, 6vw, 60px) 20px 10px 20px;
+        }
+
+        .signature-box p {
+            color: white;
+            font-size: clamp(0.95em, 1.8vw, 1.1em);
+            margin: 5px 0;
+        }
+
+        .signature-box .title {
+            color: #60a5fa;
+            font-weight: bold;
+        }
+
+        .contact-info {
+            background: rgba(30, 58, 95, 0.6);
+            backdrop-filter: blur(10px);
+            padding: clamp(30px, 5vw, 50px);
+            border-radius: 30px;
+            margin-top: clamp(30px, 4vw, 40px);
+            border: 2px solid rgba(96, 165, 250, 0.3);
+        }
+
+        .contact-info h2 {
+            color: white;
+            font-size: clamp(1.5em, 4vw, 2.5em);
+            margin-bottom: clamp(20px, 3vw, 30px);
+        }
+
+        .contact-info p {
+            color: #f0f0f0;
+            font-size: clamp(1em, 2.5vw, 1.5em);
+            margin: 15px 0;
+        }
+
+        /* Navegación */
+        .navigation {
+            position: fixed;
+            bottom: clamp(15px, 3vw, 30px);
+            right: clamp(15px, 3vw, 30px);
+            display: flex;
+            gap: clamp(10px, 2vw, 15px);
+            z-index: 1000;
+        }
+
+        .nav-btn {
+            background: rgba(255,255,255,0.3);
+            backdrop-filter: blur(10px);
+            border: 2px solid white;
+            color: white;
+            padding: clamp(10px, 2vw, 15px) clamp(15px, 3vw, 25px);
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: clamp(0.9em, 1.8vw, 1.1em);
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .nav-btn:hover {
+            background: white;
+            color: #1e3a5f;
+            transform: scale(1.1);
+        }
+
+        .slide-counter {
+            position: fixed;
+            bottom: clamp(15px, 3vw, 30px);
+            left: clamp(15px, 3vw, 30px);
+            background: rgba(255,255,255,0.3);
+            backdrop-filter: blur(10px);
+            padding: clamp(10px, 2vw, 15px) clamp(15px, 3vw, 25px);
+            border-radius: 30px;
+            color: white;
+            font-size: clamp(0.9em, 2vw, 1.2em);
+            font-weight: bold;
+        }
+
+        .download-btn {
+            position: fixed;
+            top: clamp(15px, 3vw, 30px);
+            right: clamp(15px, 3vw, 30px);
+            background: #60a5fa;
+            color: white;
+            border: none;
+            padding: clamp(10px, 2vw, 15px) clamp(20px, 3vw, 30px);
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: clamp(0.9em, 1.8vw, 1.1em);
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 1000;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(96, 165, 250, 0.4);
+        }
+
+        .download-btn:hover {
+            background: #4a8fd9;
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(96, 165, 250, 0.6);
+        }
+
+        .download-btn:active {
+            transform: scale(0.98);
+        }
+
+        /* Media queries adicionales */
+        @media (max-width: 768px) {
+            .objective-card:hover {
+                transform: none;
+            }
+
+            .pricing-card:hover {
+                transform: none;
+            }
+
+            .nav-btn {
+                padding: 10px 15px;
+                font-size: 0.9em;
+            }
+
+            .download-btn {
+                padding: 10px 20px;
+                font-size: 0.9em;
+            }
+        }
+
+        @media (min-width: 769px) {
+            .objective-card:hover {
+                transform: translateY(-10px);
+                background: rgba(30, 58, 95, 0.8);
+                border-color: rgba(96, 165, 250, 0.6);
+            }
+
+            .pricing-card:hover {
+                transform: scale(1.05);
+                border-color: rgba(96, 165, 250, 0.5);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="presentation-container">
+        <!-- Slide 1: Portada -->
+        <div class="slide slide-1 active">
+            <h1>🚀 Propuesta Comercial</h1>
+            <h2>Desarrollo de Ecommerce para Distribución de Repuestos de Gasodomésticos</h2>
+            <div class="client-name">FULLGAS JC</div>
+            <div class="company-info">
+                <p><strong>Presentado por:</strong> Ingeniero Darwin Solano</p>
+                <p>7 años de experiencia en desarrollo de software y análisis de datos</p>
+            </div>
+        </div>
+
+        <!-- Slide 2: Objetivos -->
+        <div class="slide slide-2">
+            <h1 class="slide-title">🎯 Objetivos del Proyecto</h1>
+            <div class="objectives-grid">
+                <div class="objective-card">
+                    <h3>Catálogo Digital B2B</h3>
+                    <p>Establecer una plataforma profesional para que sus clientes con punto de venta accedan a su catálogo de repuestos de gasodomésticos.</p>
+                </div>
+                <div class="objective-card">
+                    <h3>Gestión Ágil</h3>
+                    <p>Facilitar la actualización constante de productos y referencias nuevas que llegan continuamente a su inventario.</p>
+                </div>
+                <div class="objective-card">
+                    <h3>Comunicación Directa</h3>
+                    <p>Integración con WhatsApp Business para consultas y cotizaciones, optimizando la relación con sus distribuidores.</p>
+                </div>
+                <div class="objective-card">
+                    <h3>Escalabilidad</h3>
+                    <p>Solución que crece con su negocio, iniciando con ~300 artículos y capacidad ilimitada para nuevas referencias.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3: Alcance -->
+        <div class="slide slide-3">
+            <h1 class="slide-title">📋 Alcance del Proyecto</h1>
+            <div class="features-list">
+                <div class="feature-item">
+                    <div class="feature-icon">📋</div>
+                    <div class="feature-content">
+                        <h3>Catálogo de Productos Completo</h3>
+                        <p>Sistema de gestión para cada producto: Nombre, Imagen, Descripción detallada y Precio actualizable</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">💬</div>
+                    <div class="feature-content">
+                        <h3>Acceso Directo a WhatsApp</h3>
+                        <p>Botón de contacto directo para consultas y cotizaciones con sus distribuidores</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">🏷️</div>
+                    <div class="feature-content">
+                        <h3>Sistema de Ofertas y Descuentos</h3>
+                        <p>Funcionalidad para destacar productos en oferta con descuentos personalizables</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">📦</div>
+                    <div class="feature-content">
+                        <h3>Gestión Ilimitada de Productos</h3>
+                        <p>Capacidad para ~300 artículos iniciales con fácil incorporación de nuevas referencias constantemente</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">📱</div>
+                    <div class="feature-content">
+                        <h3>Diseño Responsivo</h3>
+                        <p>Adaptable a todos los dispositivos para que sus clientes accedan desde cualquier lugar</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">🔧</div>
+                    <div class="feature-content">
+                        <h3>Panel Administrativo Intuitivo</h3>
+                        <p>Gestión fácil y rápida para agregar/modificar productos, precios y ofertas sin control de inventario</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 4: Estudio de Mercado -->
+        <div class="slide slide-4">
+            <h1 class="slide-title">📊 Análisis del Mercado Colombiano</h1>
+
+            <div class="comparison-table">
+                <h3>💰 Precios de Mercado en Colombia</h3>
+                <div class="comparison-grid">
+                    <div class="comparison-item">
+                        <div class="type">Desarrollo Básico</div>
+                        <div class="price-range">$1.3M - $5M</div>
+                        <div class="details">
+                            • Plantillas predefinidas<br>
+                            • Funcionalidades estándar<br>
+                            • Pocos productos<br>
+                            • Sin personalización
+                        </div>
+                    </div>
+                    <div class="comparison-item">
+                        <div class="type">Desarrollo Intermedio</div>
+                        <div class="price-range">$5M - $15M</div>
+                        <div class="details">
+                            • Diseño semi-personalizado<br>
+                            • Catálogo amplio<br>
+                            • Funciones adicionales<br>
+                            • Integraciones básicas
+                        </div>
+                    </div>
+                    <div class="comparison-item">
+                        <div class="type">Desarrollo Avanzado</div>
+                        <div class="price-range">$15M - $30M+</div>
+                        <div class="details">
+                            • Diseño 100% a medida<br>
+                            • Funciones complejas<br>
+                            • Múltiples integraciones<br>
+                            • Escalabilidad enterprise
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 25px; padding: 20px; background: rgba(20, 40, 60, 0.6); border-radius: 15px;">
+                    <h3 style="color: #60a5fa; font-size: 1.5em; margin-bottom: 15px; text-align: center;">Plataformas SaaS en el Mercado</h3>
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; text-align: center;">
+                        <div>
+                            <p style="color: white; font-weight: bold;">Shopify</p>
+                            <p style="color: #60a5fa; font-size: 1.3em;">~$100k/mes</p>
+                            <p style="color: #cbd5e0; font-size: 0.9em;">Plan básico USD $25-39</p>
+                        </div>
+                        <div>
+                            <p style="color: white; font-weight: bold;">Komercia</p>
+                            <p style="color: #60a5fa; font-size: 1.3em;">$125k - $145k</p>
+                            <p style="color: #cbd5e0; font-size: 0.9em;">Planes locales Colombia</p>
+                        </div>
+                        <div>
+                            <p style="color: white; font-weight: bold;">VTEX Enterprise</p>
+                            <p style="color: #60a5fa; font-size: 1.3em;">$2M+/mes</p>
+                            <p style="color: #cbd5e0; font-size: 0.9em;">USD $500+ para grandes empresas</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="value-proposition">
+                <h3>✨ Nuestra Propuesta de Valor</h3>
+                <p>
+                    Ofrecemos una solución <strong>profesional y personalizada</strong> a precios competitivos, 
+                    con opciones flexibles de pago que se ajustan a su presupuesto. <br>
+                    Nuestro modelo SaaS a <strong>$75.000/mes</strong> es <strong>hasta 30% más económico</strong> 
+                    que plataformas internacionales, sin sacrificar calidad ni funcionalidad.<br>
+                    Otras plataformas de servicios SaaS tienen sus diseños establecidos y el cliente es quien se ajusta a estos.
+                </p>
+            </div>
+        </div>
+
+        <!-- Slide 5: Propuestas -->
+        <div class="slide slide-5">
+            <h1 class="slide-title">💰 Propuestas Comerciales</h1>
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <h3>Opción 1</h3>
+                    <div class="price">$750.000</div>
+                    <div class="price-detail">Pago Único</div>
+                    <ul class="features">
+                        <li>Desarrollo completo del catálogo</li>
+                        <li>Hosting AWS + Dominio (1 año)</li>
+                        <li>Sistema de ofertas y descuentos</li>
+                        <li>Botón WhatsApp integrado</li>
+                        <li>Soporte y actualizaciones: $30.000/mes</li>
+                        <li>Propiedad total del código</li>
+                    </ul>
+                </div>
+
+                <div class="pricing-card recommended">
+                    <div class="recommended-badge">RECOMENDADO</div>
+                    <h3>Opción 2</h3>
+                    <div class="price">$75.000</div>
+                    <div class="price-detail">Mensual (SaaS)</div>
+                    <ul class="features">
+                        <li>Inicial: $150.000 (para construir la plataforma)</li>
+                        <li>Mantenimiento y mejoras</li>
+                        <li>Soporte tecnico ilimitado</li>
+                        <li>Sin costos ocultos</li>
+                        <li>Hosting y dominio incluido</li>
+                        <li>Actualizaciones continuas</li>
+                        <li>Gestión ilimitada de productos</li>
+                        <li>Cancela cuando quieras</li>
+                    </ul>
+                </div>
+
+                <div class="pricing-card">
+                    <h3>Opción 3</h3>
+                    <div class="price">$250.000</div>
+                    <div class="price-detail">Inicial + Cuotas</div>
+                    <ul class="features">
+                        <li>Enganche: $250.000</li>
+                        <li>5 cuotas para completar el restante</li>
+                        <li>Soporte y actualizaciones: $30.000/mes</li>
+                        <li>Flexibilidad de pago</li>
+                        <li>Mismas funcionalidades que la opcion 1</li>
+                        <li>Hosting y dominio (1 año)</li>
+                        <li>Propiedad total del código</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 6: Cronograma -->
+        <div class="slide slide-6">
+            <h1 class="slide-title">📅 Cronograma de Desarrollo</h1>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <h3>Sprint 1 (Días 1-3): Planificación y Diseño</h3>
+                    <p>Definición de requerimientos, arquitectura del sistema y diseño de interfaces</p>
+                </div>
+                <div class="timeline-item">
+                    <h3>Sprint 2 (Días 4-10): Desarrollo Backend & Frontend</h3>
+                    <p>Implementación de modelos, lógica de negocio y construcción de interfaces, catálogo de productos con sistema de ofertas, descuentos</p>
+                </div>
+                <div class="timeline-item">
+                    <h3>Sprint 3 (Días 11-12): Integración WhatsApp y Panel Admin</h3>
+                    <p>Implementación de botón WhatsApp y panel administrativo para gestión de productos</p>
+                </div>
+                <div class="timeline-item">
+                    <h3>Sprint 4 (Días 13-14): Testing y Despliegue</h3>
+                    <p>Pruebas completas, correcciones, configuración AWS y lanzamiento</p>
+                </div>
+            </div>
+            <div style="margin-top: 30px; background: rgba(30, 58, 95, 0.6); padding: 20px; border-radius: 15px; border: 2px solid rgba(96, 165, 250, 0.3);">
+                <p style="color: white; font-size: 1.3em; text-align: center;"><strong>⏱️ Tiempo total de entrega: 2 semanas</strong></p>
+                <p style="color: #cbd5e0; font-size: 1.1em; text-align: center; margin-top: 10px;">Metodología ágil SCRUM con entregas incrementales</p>
+            </div>
+        </div>
+
+        <!-- Slide 7: Soporte y Contacto -->
+        <div class="slide slide-7">
+            <h1 class="slide-title">🤝 Soporte y Mantenimiento</h1>
+            <div class="contact-info">
+                <h2>Incluye:</h2>
+                <p>✓ Actualizaciones de seguridad</p>
+                <p>✓ Mejoras básicas en diseño</p>
+                <p>✓ Corrección de fallas del sistema</p>
+                <p>✓ Soporte técnico continuo</p>
+                <div style="margin-top: 40px; padding-top: 40px; border-top: 2px solid rgba(96, 165, 250, 0.3);">
+                    <h2>Desarrollos Adicionales</h2>
+                    <p style="font-size: 2em; color: #60a5fa;">$5.000 por hora</p>
+                    <p style="font-size: 1.2em;">Para funcionalidades personalizadas</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 8: Aceptación de Propuesta -->
+        <div class="slide slide-8">
+            <div class="acceptance-container">
+                <h1 class="slide-title" style="border-color: #60a5fa;">📋 Aceptación de Propuesta</h1>
+                
+                <div class="payment-terms">
+                    <h3>💳 Condiciones de Pago</h3>
+                    <div class="payment-grid">
+                        <div class="payment-item">
+                            <div class="percentage">30%</div>
+                            <div class="label">Al inicio</div>
+                        </div>
+                        <div class="payment-item">
+                            <div class="percentage">70%</div>
+                            <div class="label">Al finalizar</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="background: rgba(30, 58, 95, 0.5); padding: 25px; border-radius: 15px; margin: 30px 0;">
+                    <p style="color: white; font-size: 1.2em; line-height: 1.8;">
+                        Al firmar este documento, <strong>FULLGAS JC</strong> acepta los términos, condiciones y alcance descritos en esta propuesta comercial.
+                    </p>
+                </div>
+
+                <div class="signature-section">
+                    <div class="signature-box">
+                        <div class="signature-line"></div>
+                        <p class="title">FULLGAS JC</p>
+                        <p>Representante Legal</p>
+                        <p>Fecha: ___ / ___ / _____</p>
+                    </div>
+                    <div class="signature-box">
+                        <div class="signature-line"></div>
+                        <p class="title">Ing. Darwin Solano</p>
+                        <p>Proveedor del Servicio</p>
+                        <p>Fecha: ___ / ___ / _____</p>
+                    </div>
+                </div>
+
+                <div style="margin-top: 40px; text-align: center; padding: 20px; background: rgba(96, 165, 250, 0.1); border-radius: 15px;">
+                    <p style="color: #60a5fa; font-size: 1.1em; font-weight: bold;">
+                        📧 Contacto: darwinsolano2022@gmail.com | 📱 WhatsApp: +57 316 6423014
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentSlide = 1;
+        const totalSlides = 8;
+
+        function showSlide(n) {
+            const slides = document.querySelectorAll('.slide');
+            
+            if (n > totalSlides) currentSlide = 1;
+            if (n < 1) currentSlide = totalSlides;
+            
+            slides.forEach(slide => slide.classList.remove('active'));
+            slides[currentSlide - 1].classList.add('active');
+            
+            document.getElementById('current-slide').textContent = currentSlide;
+        }
+
+        function nextSlide() {
+            currentSlide++;
+            showSlide(currentSlide);
+        }
+
+        function previousSlide() {
+            currentSlide--;
+            showSlide(currentSlide);
+        }
+
+        // Navegación con teclado
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') nextSlide();
+            if (e.key === 'ArrowLeft') previousSlide();
+        });
+
+        // Función para descargar PDF
+        async function downloadPDF() {
+            const { jsPDF } = window.jspdf;
+            const slides = document.querySelectorAll('.slide');
+            const navigationBtns = document.querySelector('.navigation');
+            const slideCounter = document.querySelector('.slide-counter');
+            const downloadBtn = document.querySelector('.download-btn');
+            
+            // Ocultar controles
+            navigationBtns.style.display = 'none';
+            slideCounter.style.display = 'none';
+            downloadBtn.style.display = 'none';
+            
+            // Crear PDF en formato apaisado A4
+            const pdf = new jsPDF('landscape', 'mm', 'a4');
+            const pdfWidth = pdf.internal.pageSize.getWidth();
+            const pdfHeight = pdf.internal.pageSize.getHeight();
+            
+            try {
+                for (let i = 0; i < slides.length; i++) {
+                    // Mostrar solo el slide actual
+                    slides.forEach(s => s.style.display = 'none');
+                    slides[i].style.display = 'flex';
+                    slides[i].style.position = 'relative';
+                    slides[i].classList.add('active');
+                    
+                    // Esperar renderizado
+                    await new Promise(resolve => setTimeout(resolve, 300));
+                    
+                    // Capturar slide
+                    const canvas = await html2canvas(slides[i], {
+                        scale: 2,
+                        useCORS: true,
+                        logging: false,
+                        backgroundColor: null,
+                        width: 1920,
+                        height: 1080
+                    });
+                    
+                    const imgData = canvas.toDataURL('image/jpeg', 0.95);
+                    
+                    // Agregar imagen al PDF
+                    if (i > 0) {
+                        pdf.addPage();
+                    }
+                    pdf.addImage(imgData, 'JPEG', 0, 0, pdfWidth, pdfHeight);
+                    
+                    // Restaurar slide
+                    slides[i].style.display = 'none';
+                    slides[i].style.position = 'absolute';
+                    slides[i].classList.remove('active');
+                }
+                
+                // Guardar PDF
+                pdf.save('Propuesta_Comercial_FULLGAS_JC.pdf');
+                
+            } catch (error) {
+                console.error('Error generando PDF:', error);
+                alert('Hubo un error al generar el PDF. Por favor intenta nuevamente.');
+            }
+            
+            // Restaurar controles
+            navigationBtns.style.display = 'flex';
+            slideCounter.style.display = 'block';
+            downloadBtn.style.display = 'flex';
+            
+            // Volver al slide actual
+            showSlide(currentSlide);
+        }
+
+        // Inicializar
+        showSlide(currentSlide);
+    </script>
+</body>
+</html>
