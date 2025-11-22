@@ -346,6 +346,15 @@
             .pricing-card.recommended {
                 transform: scale(1.05);
             }
+            .presentation-container {
+                width: 100vw;
+                height: 100vh;
+                overflow: hidden; /* Previene cortes */
+            }
+            .slide {
+                height: 100vh !important;
+                overflow-y: auto !important; /* Para permitir scroll interno si el contenido es muy grande */
+            }
         }
 
         .recommended-badge {
